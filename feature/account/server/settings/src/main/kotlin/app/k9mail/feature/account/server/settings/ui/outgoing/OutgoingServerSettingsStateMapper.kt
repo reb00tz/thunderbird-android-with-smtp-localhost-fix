@@ -32,6 +32,7 @@ private fun ServerSettings.toOutgoingServerSettingsState(password: String): Stat
         security = connectionSecurity.toConnectionSecurity(),
         port = NumberInputField(value = port.toLong()),
         authenticationType = authenticationType.toAuthenticationType(),
+        requireSMTPEHLOFix = BooleanInputField(value = requireSMTPEHLOFix),
         username = StringInputField(value = username),
         password = StringInputField(value = password),
 
@@ -47,6 +48,7 @@ internal fun State.toServerSettings(): ServerSettings {
         port = port.value!!.toInt(),
         connectionSecurity = security.toMailConnectionSecurity(),
         authenticationType = authenticationType.toAuthType(),
+        requireSMTPEHLOFix = requireSMTPEHLOFix.value,
         username = if (authenticationType.isUsernameRequired) username.value.trim() else "",
         password = if (authenticationType.isPasswordRequired) password.value.trim() else null,
         clientCertificateAlias = clientCertificateAlias,
