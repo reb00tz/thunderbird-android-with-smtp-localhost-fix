@@ -25,6 +25,7 @@ private const val KEY_HOST = "host"
 private const val KEY_PORT = "port"
 private const val KEY_CONNECTION_SECURITY = "connectionSecurity"
 private const val KEY_AUTHENTICATION_TYPE = "authenticationType"
+private const val KEY_REQUIRES_SMTP_EHLO_FIX = "requiresSMTPEHLOFix"
 private const val KEY_USERNAME = "username"
 private const val KEY_PASSWORD = "password"
 private const val KEY_CLIENT_CERTIFICATE_ALIAS = "clientCertificateAlias"
@@ -35,6 +36,7 @@ private val JSON_KEYS = JsonReader.Options.of(
     KEY_PORT,
     KEY_CONNECTION_SECURITY,
     KEY_AUTHENTICATION_TYPE,
+    KEY_REQUIRES_SMTP_EHLO_FIX,
     KEY_USERNAME,
     KEY_PASSWORD,
     KEY_CLIENT_CERTIFICATE_ALIAS,
@@ -49,6 +51,7 @@ private class ServerSettingsAdapter : JsonAdapter<ServerSettings>() {
         var port: Int? = null
         var connectionSecurity: ConnectionSecurity? = null
         var authenticationType: AuthType? = null
+        var requiresSMTPEHLOFix: Boolean? = null
         var username: String? = null
         var password: String? = null
         var clientCertificateAlias: String? = null
@@ -61,9 +64,10 @@ private class ServerSettingsAdapter : JsonAdapter<ServerSettings>() {
                 2 -> port = reader.nextInt()
                 3 -> connectionSecurity = ConnectionSecurity.valueOf(reader.nextString())
                 4 -> authenticationType = AuthType.valueOf(reader.nextString())
-                5 -> username = reader.nextString()
-                6 -> password = reader.nextStringOrNull()
-                7 -> clientCertificateAlias = reader.nextStringOrNull()
+                5 -> requiresSMTPEHLOFix = reader.nextStringOrNull()
+                6 -> username = reader.nextString()
+                7 -> password = reader.nextStringOrNull()
+                8 -> clientCertificateAlias = reader.nextStringOrNull()
                 else -> {
                     val key = reader.nextName()
                     val value = reader.nextStringOrNull()
@@ -87,6 +91,7 @@ private class ServerSettingsAdapter : JsonAdapter<ServerSettings>() {
             port,
             connectionSecurity,
             authenticationType,
+            requiresSMTPEHLOFix,
             username,
             password,
             clientCertificateAlias,
@@ -105,6 +110,7 @@ private class ServerSettingsAdapter : JsonAdapter<ServerSettings>() {
         writer.name(KEY_PORT).value(serverSettings.port)
         writer.name(KEY_CONNECTION_SECURITY).value(serverSettings.connectionSecurity.name)
         writer.name(KEY_AUTHENTICATION_TYPE).value(serverSettings.authenticationType.name)
+        writer.name(KEY_REQUIRES_SMTP_EHLO_FIX).value(serverSettings.requiresSMTPEHLOFix.value)
         writer.name(KEY_USERNAME).value(serverSettings.username)
         writer.name(KEY_PASSWORD).value(serverSettings.password)
         writer.name(KEY_CLIENT_CERTIFICATE_ALIAS).value(serverSettings.clientCertificateAlias)
