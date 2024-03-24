@@ -19,6 +19,7 @@ interface OutgoingServerSettingsContract {
         val security: ConnectionSecurity = ConnectionSecurity.DEFAULT,
         val port: NumberInputField = NumberInputField(ConnectionSecurity.DEFAULT.toSmtpDefaultPort()),
         val authenticationType: AuthenticationType = AuthenticationType.PasswordCleartext,
+        val requireSMTPEHLOFix: AuthenticationType = AuthenticationType.BooleanInputField(),
         val username: StringInputField = StringInputField(),
         val password: StringInputField = StringInputField(),
         val clientCertificateAlias: String? = null,
@@ -32,6 +33,7 @@ interface OutgoingServerSettingsContract {
         data class SecurityChanged(val security: ConnectionSecurity) : Event
         data class PortChanged(val port: Long?) : Event
         data class AuthenticationTypeChanged(val authenticationType: AuthenticationType) : Event
+        data class requireSMTPEHLOFixChanged(val requireSMTPEHLOFix: Boolean) : Event
         data class UsernameChanged(val username: String) : Event
         data class PasswordChanged(val password: String) : Event
         data class ClientCertificateChanged(val clientCertificateAlias: String?) : Event
