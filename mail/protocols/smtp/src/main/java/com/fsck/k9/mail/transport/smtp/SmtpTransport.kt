@@ -57,6 +57,7 @@ class SmtpTransport(
     private val password = serverSettings.password
     private val clientCertificateAlias = serverSettings.clientCertificateAlias
     private val authType = serverSettings.authenticationType
+    private val requireSMTPEHLOFix = serverSettings.requireSMTPEHLOFix
     private val connectionSecurity = serverSettings.connectionSecurity
 
     private var socket: Socket? = null
@@ -292,10 +293,19 @@ class SmtpTransport(
 
         // We use local IP statically for privacy reasons,
         // see https://github.com/thunderbird/thunderbird-android/pull/3798
-        return if (localAddress is Inet6Address) {
-            "[IPv6:::1]"
-        } else {
-            "[127.0.0.1]"
+        return if (requireSMTPEHLOFix is true) {
+            if (localAddress is Inet6Address) {
+                "[IPv6::ffff:c0a8:101]"
+            } else {
+                "[192.168.1.1]"
+            }
+        }
+        else {
+            if (localAddress is Inet6Address) {
+                "[IPv6:::1]"
+            } else {
+                "[127.0.0.1]"
+            }
         }
     }
 
