@@ -27,7 +27,7 @@ open class OutgoingServerSettingsViewModel(
             is Event.SecurityChanged -> updateSecurity(event.security)
             is Event.PortChanged -> updateState { it.copy(port = it.port.updateValue(event.port)) }
             is Event.AuthenticationTypeChanged -> updateState { it.copy(authenticationType = event.authenticationType) }
-            is Event.RequireSMTPEHLOFixChanged -> updateState { it.copy(requireSMTPEHLOFixChanged.updateValue(event.requireSMTPEHLOFixChanged)) }
+            is Event.RequireSMTPEHLOFixChanged -> updateState { it.copy(requireSMTPEHLOFix = it.requireSMTPEHLOFix.updateValue(evemt.requireSMTPEHLOFix)) }
             is Event.UsernameChanged -> updateState { it.copy(username = it.username.updateValue(event.username)) }
             is Event.PasswordChanged -> updateState { it.copy(password = it.password.updateValue(event.password)) }
             is Event.ClientCertificateChanged -> updateState {
