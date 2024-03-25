@@ -9,6 +9,7 @@ data class ServerSettings @JvmOverloads constructor(
     @JvmField val port: Int,
     @JvmField val connectionSecurity: ConnectionSecurity,
     @JvmField val authenticationType: AuthType,
+    @JvmField val requiresSMTPEHLOFix: Boolean,
     @JvmField val username: String,
     @JvmField val password: String?,
     @JvmField val clientCertificateAlias: String?,
